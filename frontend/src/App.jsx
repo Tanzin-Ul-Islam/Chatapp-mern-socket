@@ -1,12 +1,18 @@
 import { useState } from 'react'
-import Register from './pages/auth/Register'
+import SignUp from './pages/auth/SignUp';
+import SignIn from './pages/auth/SignIn';
+import { Routes, Route } from 'react-router-dom';
+import ContextProvider from './ContextProvider';
 
 function App() {
 
   return (
-    <>
-      <Register />
-    </>
+    <ContextProvider>
+      <Routes>
+        <Route path="/sign-up" element={<SignUp />}></Route>
+        <Route path="/sign-in" element={<SignIn />}></Route>
+      </Routes>
+    </ContextProvider>
   )
 }
 
