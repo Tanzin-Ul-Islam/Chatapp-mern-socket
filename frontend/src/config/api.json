@@ -1,6 +1,7 @@
 {
     "auth":{
         "signUp":"/auth/sign-up",
-        "signIn":"/auth/sign-in"
+        "signIn":"/auth/sign-in",
+        "test":"/auth/test"
     }
 }
