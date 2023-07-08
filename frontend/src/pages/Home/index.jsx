@@ -5,8 +5,10 @@ import axios from '../../config/axios.config';
 import api from '../../config/api.json';
 export default function Home() {
   async function test() {
-    await axios.get(api.auth.test).then(response => {
+    await axios.get(api.auth.test, { withCredentials: true }).then(response => {
       console.log(response)
+    }).catch(error=>{
+      console.log(error);
     })
   }
   useEffect(() => {

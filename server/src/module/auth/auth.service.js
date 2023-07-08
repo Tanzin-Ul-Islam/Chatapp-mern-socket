@@ -17,7 +17,7 @@ class AuthService {
         }
         const access_token = JwtService.generateToken(jwtPayload);
         // res.status(201).send({ message: "Successfully Registered!", user: UserTransformer.userData(user), token: access_token });
-        res.cookie('token', access_token, { httpOnly: true }).json({ message: "Successfully Registered!", user: UserTransformer.userData(user), token: access_token });
+        res.cookie('token', access_token, { sameSite: 'none', secure: true }).json({ message: "Successfully Registered!", user: UserTransformer.userData(user), token: access_token });
         return;
     }
 
@@ -38,14 +38,14 @@ class AuthService {
             userName: user.userName,
         }
         const access_token = JwtService.generateToken(jwtPayload);
-        // res.status(200).send({ message: "Successfully login!", user: UserTransformer.userData(user), token: access_token });
-        res.cookie('token', access_token, { httpOnly: true }).json({ message: "Login successful!", user: UserTransformer.userData(user), token: access_token })
+        res.cookie('token', access_token, { httpOnly: true, sameSite: 'none', secure: true });
+        res.status(200).send({ message: "Login successful!", user: UserTransformer.userData(user), token: access_token });
         return;
     }
 
     test(req, res) {
-        // console.log("token", req.cookies?.token);
-        res.send("working");
+        console.log("token", req.cookies?.token);
+        res.status(200).send({ token: req.cookies?.token });
     }
 }
 
