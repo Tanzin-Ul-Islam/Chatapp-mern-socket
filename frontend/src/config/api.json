@@ -1,7 +1,10 @@
 {
-    "auth":{
-        "signUp":"/auth/sign-up",
-        "signIn":"/auth/sign-in",
-        "test":"/auth/test"
+    "auth": {
+        "signUp": "/auth/sign-up",
+        "signIn": "/auth/sign-in",
+        "test": "/auth/test"
+    },
+    "user": {
+        "getAllUserUrl": "/user/all"
     }
 }
