@@ -5,6 +5,11 @@ class UserRepository{
         return res;
     }
 
+    async getAllUser(){
+        const res = await user.find({});
+        return res;
+    }
+
     async findUserbyName(userName){
         const res = await user.findOne({
             userName: userName,
