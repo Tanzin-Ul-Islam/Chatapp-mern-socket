@@ -7,6 +7,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import WebSocket, { WebSocketServer } from 'ws';
 import JwtService from "./src/utils/jwt.service.js";
+import { ClientSession } from "mongodb";
 dotenv.config();
 
 const app = express();
@@ -42,6 +43,15 @@ socketServer.on('connection', (connection, req) => {
             }
         }
     }
+
+    //while sending message
+    connection.on('message', message => {
+        const { message: payload } = JSON.parse(message);
+        console.log("mess:", payload);
+
+    })
+
+    //online users
     const clients = [...socketServer.clients];
     clients.forEach(client => {
         client.send(JSON.stringify({

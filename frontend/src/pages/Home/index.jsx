@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Sidebar from '../../components/Sidebar'
 import Chat from '../../components/Chat'
 import axios from '../../config/axios.config';
 import api from '../../config/api.json';
+import { DataContext } from '../../ContextProvider';
+import Landing from '../../components/Landing'
 export default function Home() {
+  const { chattingWith } = useContext(DataContext);
   const [ws, setWs] = useState(null);
   const [userList, setUserList] = useState([]);
   const [activeUserList, setActiveUserList] = useState([]);
@@ -41,10 +44,14 @@ export default function Home() {
     setWs(ws);
     ws.addEventListener('message', handleMessage);
   }, []);
+
   return (
     <div className='flex h-screen'>
       <Sidebar userList={userList} activeUserList={activeUserList} />
-      <Chat />
+      {
+        chattingWith?._id ? <Chat ws={ws}/> : <Landing/>
+      }
+
     </div>
   )
 }
