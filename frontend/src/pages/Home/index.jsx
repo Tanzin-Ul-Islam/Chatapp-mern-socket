@@ -6,7 +6,7 @@ import api from '../../config/api.json';
 import { DataContext } from '../../ContextProvider';
 import Landing from '../../components/Landing'
 export default function Home() {
-  const { chattingWith } = useContext(DataContext);
+  const { chattingWith, setMessageList } = useContext(DataContext);
   const [ws, setWs] = useState(null);
   const [userList, setUserList] = useState([]);
   const [activeUserList, setActiveUserList] = useState([]);
@@ -35,6 +35,8 @@ export default function Home() {
       const activeUserList = parsedJson.online[0];
       const uniqueActiveUserList = getUniqueListBy(activeUserList)
       setActiveUserList(uniqueActiveUserList);
+    } else {
+      setMessageList(prevState => ([...prevState, { text: parsedJson.message, isOur: false }]))
     }
   }
 
@@ -49,7 +51,7 @@ export default function Home() {
     <div className='flex h-screen'>
       <Sidebar userList={userList} activeUserList={activeUserList} />
       {
-        chattingWith?._id ? <Chat ws={ws}/> : <Landing/>
+        chattingWith?._id ? <Chat ws={ws} /> : <Landing />
       }
 
     </div>

@@ -7,12 +7,14 @@ export default function ContextProvider({ children }) {
     const [name, setName] = useState(localStorage.getItem('name') ? localStorage.getItem('name') : null);
     const [userId, setUserId] = useState(localStorage.getItem('userId') ? localStorage.getItem('userId') : null);
     const [chattingWith, setChattingWith] = useState({});
+    const [messageList, setMessageList] = useState([])
     return (
         <DataContext.Provider value={{
             token, setToken,
             name, setName,
             userId, setUserId,
-            chattingWith, setChattingWith
+            chattingWith, setChattingWith,
+            messageList, setMessageList,
         }}>
             {children}
         </DataContext.Provider>

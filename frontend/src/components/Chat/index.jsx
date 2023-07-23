@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { DataContext } from '../../ContextProvider';
 export default function Chat({ ws }) {
-    const { chattingWith } = useContext(DataContext)
+    const { chattingWith, messageList, setMessageList, } = useContext(DataContext)
 
     const [message, setMessage] = useState("");
 
@@ -13,7 +13,9 @@ export default function Chat({ ws }) {
                     recipient: chattingWith._id,
                     text: message,
                 }
-            }))
+            }));
+            setMessageList(prevState => ([...prevState, { text: message, isOur: true }]))
+            setMessage("");
         } catch (error) {
             console.log(error)
         }
@@ -21,6 +23,13 @@ export default function Chat({ ws }) {
     return (
         <div className='flex flex-col bg-blue-200 w-2/3 p-2'>
             <div className='flex-grow'>Chatting with</div>
+            {
+                messageList.map((el, index) => {
+                    return (
+                        <div key={el + index}>{el?.text}</div>
+                    )
+                })
+            }
             <form onSubmit={handleSubmit}>
                 <div className='flex gap-2'>
                     <input type="text" placeholder='Type message here...' className='bg-white outline-blue-300 border p-2 flex-grow rounded-sm' value={message} onChange={(e) => { setMessage(e.target.value) }} />

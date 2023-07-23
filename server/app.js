@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 import WebSocket, { WebSocketServer } from 'ws';
 import JwtService from "./src/utils/jwt.service.js";
 import { ClientSession } from "mongodb";
+import MessageService from "./src/module/message/message.service.js";
 dotenv.config();
 
 const app = express();
@@ -45,9 +46,22 @@ socketServer.on('connection', (connection, req) => {
     }
 
     //while sending message
-    connection.on('message', message => {
+    connection.on('message', async (message) => {
         const { message: payload } = JSON.parse(message);
-        console.log("mess:", payload);
+        const messageData = {
+            receiver: payload.recipient,
+            sender: connection.id,
+            message: payload.text,
+        }
+        const res = await MessageService.postMessage(messageData);
+        console.log('res', res);
+        if (payload) {
+            [...socketServer.clients]
+                .filter(client => client.id === payload.recipient)
+                .forEach(client => {
+                    client.send(JSON.stringify({ message: payload.text }))
+                });
+        }
 
     })
 
