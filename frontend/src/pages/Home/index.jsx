@@ -36,7 +36,8 @@ export default function Home() {
       const uniqueActiveUserList = getUniqueListBy(activeUserList)
       setActiveUserList(uniqueActiveUserList);
     } else {
-      setMessageList(prevState => ([...prevState, { text: parsedJson.message, isOur: false }]))
+      console.log('message', parsedJson);
+      setMessageList(prevState => ([...prevState, { ...parsedJson.message }]))
     }
   }
 

@@ -59,7 +59,7 @@ socketServer.on('connection', (connection, req) => {
             [...socketServer.clients]
                 .filter(client => client.id === payload.recipient)
                 .forEach(client => {
-                    client.send(JSON.stringify({ message: payload.text }))
+                    client.send(JSON.stringify({ message: messageData }))
                 });
         }
 
