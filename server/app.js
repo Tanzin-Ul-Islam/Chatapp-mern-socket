@@ -9,6 +9,7 @@ import WebSocket, { WebSocketServer } from 'ws';
 import JwtService from "./src/utils/jwt.service.js";
 import { ClientSession } from "mongodb";
 import MessageService from "./src/module/message/message.service.js";
+import MessageRouter from "./src/module/message/message.route.js"
 dotenv.config();
 
 const app = express();
@@ -22,6 +23,7 @@ app.use(cookieParser());
 //define router
 app.use("/api/v1/auth", AuthRouter);
 app.use("/api/v1/user", UserRouter);
+app.use("/api/v1/message", MessageRouter);
 
 
 const server = app.listen(process.env.PORT, () => {

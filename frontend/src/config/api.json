@@ -6,5 +6,8 @@
     },
     "user": {
         "getAllUserUrl": "/user/all"
+    },
+    "messages":{
+        "getMessageByChattingWithId":"/message"
     }
 }

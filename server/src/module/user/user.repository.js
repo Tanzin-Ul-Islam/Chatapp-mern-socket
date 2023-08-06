@@ -1,16 +1,23 @@
 import user from "./user.model.js";
-class UserRepository{
-    async createUser(payload){
+class UserRepository {
+    async createUser(payload) {
         const res = await user.create(payload);
         return res;
     }
 
-    async getAllUser(){
+    async getAllUser() {
         const res = await user.find({});
         return res;
     }
 
-    async findUserbyName(userName){
+    async findUserbyId(id) {
+        const res = await user.findOne({
+            _id: id,
+        });
+        return res;
+    }
+
+    async findUserbyName(userName) {
         const res = await user.findOne({
             userName: userName,
         });
