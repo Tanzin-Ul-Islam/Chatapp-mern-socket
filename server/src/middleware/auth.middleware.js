@@ -7,7 +7,6 @@ async function authMiddleware(req, res, next) {
         let verifyToken = JwtService.verifyToken(authToken);
         if (verifyToken) {
             let verifyUser = await UserRepository.findUserbyId(verifyToken.id);
-            console.log(verifyUser)
             if (verifyUser) {
                 let userInfo = { id: verifyUser._id, userName: verifyUser.userName, }
                 res.locals.userInfo = userInfo;

@@ -4,8 +4,12 @@ class MessageRepository {
         const result = await message.create(payload);
         return result;
     }
-    async getMessageByChattingWithId() {
-        return;
+    async getMessageByChattingWithId(userId, chattingWithId) {
+        const result = message.find({
+            sender: { $in: [userId, chattingWithId] },
+            receiver: { $in: [userId, chattingWithId] },
+        }).sort({ createdAt: -1 })
+        return result;
     }
     async deleteAll() {
         const result = await message.deleteMany({});

@@ -18,7 +18,8 @@ export default function Chat({ ws }) {
     async function getAllMessages() {
         try {
             await axios.get(`${api.messages.getMessageByChattingWithId}/${chattingWith._id}`).then(response => {
-                console.log(response);
+                const data = response.data.data;
+                setMessageList(data);
             }).catch(error => {
                 console.log(error);
             })

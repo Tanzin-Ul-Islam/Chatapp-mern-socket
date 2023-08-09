@@ -7,7 +7,9 @@ class MessageService {
 
     async getMessageByChattingWithId(req, res) {
         const { id: chattingWithId } = req.params;
-        const result = await MessageRepository.getMessageByChattingWithId(chattingWithId);
+        const { id: userId } = res.locals.userInfo;
+        const result = await MessageRepository.getMessageByChattingWithId(userId, chattingWithId);
+        res.status(200).send({ message: 'success', data: result });
     }
 
 
