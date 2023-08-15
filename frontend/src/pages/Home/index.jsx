@@ -5,12 +5,13 @@ import axios from '../../config/axios.config';
 import api from '../../config/api.json';
 import { DataContext } from '../../ContextProvider';
 import Landing from '../../components/Landing'
+import { useNavigate } from 'react-router-dom';
 export default function Home() {
-  const { chattingWith, setMessageList } = useContext(DataContext);
+  const { chattingWith, setMessageList, setToken, setName, setUserId } = useContext(DataContext);
   const [ws, setWs] = useState(null);
   const [userList, setUserList] = useState([]);
   const [activeUserList, setActiveUserList] = useState([]);
-
+  const navigate = useNavigate();
   async function getAllUser() {
     try {
       await axios.get(api.user.getAllUserUrl).then(response => {
@@ -41,6 +42,17 @@ export default function Home() {
     }
   }
 
+  async function logout() {
+    await axios.post('/auth/logout').then(response => {
+      setWs(null)
+      setToken(null);
+      setName(null);
+      setUserId(null);
+      navigate('/sign-in');
+      localStorage.clear();
+    })
+  }
+
   useEffect(() => {
     getAllUser();
     const ws = new WebSocket('ws://localhost:5001');
@@ -50,7 +62,7 @@ export default function Home() {
 
   return (
     <div className='flex h-screen'>
-      <Sidebar userList={userList} activeUserList={activeUserList} />
+      <Sidebar userList={userList} activeUserList={activeUserList} logout={logout} />
       {
         chattingWith?._id ? <Chat ws={ws} /> : <Landing />
       }

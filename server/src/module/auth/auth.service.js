@@ -43,6 +43,11 @@ class AuthService {
         res.status(200).send({ message: "Login successful!", user: UserTransformer.userData(user), token: access_token });
         return;
     }
+
+    async logout(req, res) {
+        res.cookie('token', null, { httpOnly: true, sameSite: 'none', secure: true });
+        res.status(200).send({ message: "Logout successful!" });
+    }
 }
 
 export default new AuthService;

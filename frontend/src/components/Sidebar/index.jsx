@@ -1,13 +1,13 @@
 import React, { useContext, useEffect } from 'react'
 import { DataContext } from '../../ContextProvider';
 import './Sidebar.css';
-export default function Sidebar({ userList, activeUserList }) {
-  const { userId, chattingWith, setChattingWith } = useContext(DataContext)
+import axios from '../../config/axios.config';
+export default function Sidebar({ userList, activeUserList, logout }) {
+  const { userId, chattingWith, setChattingWith, name } = useContext(DataContext)
   function checkStatus(id) {
     const isActive = activeUserList.some(el => (el.id == id));
     return isActive;
   }
-
   return (
     <div className='flex flex-col bg-blue-300 w-1/3'>
       <div className='flex justify-center	 items-center text-white gap-2'>
@@ -33,7 +33,12 @@ export default function Sidebar({ userList, activeUserList }) {
           })
         }
       </div>
-
+      <div style={{ position: 'absolute', bottom: '0', width: '33%' }}>
+        <div className='flex justify-between items-center'>
+          <span className='text-xl font-bold'>Welcome, {name}</span>
+          <button onClick={logout} type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Logout</button>
+        </div>
+      </div>
     </div>
   )
 }
