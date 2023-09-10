@@ -4,7 +4,7 @@ import Chat from '../../components/Chat'
 import axios from '../../config/axios.config';
 import api from '../../config/api.json';
 import { DataContext } from '../../ContextProvider';
-import Landing from '../../components/Landing'
+import Landing from '../../components/Landing';
 import { useNavigate } from 'react-router-dom';
 export default function Home() {
   const { chattingWith, setMessageList, setToken, setName, setUserId } = useContext(DataContext);
@@ -70,3 +70,5 @@ export default function Home() {
     </div>
   )
 }
+
+
